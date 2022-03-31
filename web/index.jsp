@@ -9,46 +9,58 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/estilo.css">
         <title>Login</title>
     </head>
     <body>
-        <!--       <form action="ProdutoServlet" method="POST"/>-->
-        <table  style="background-color: #f7f7f7; " cellpadding="4">
+        <table class="tabela" width="100%">
             <tr>
-                <td colspan="2">
-                    <h2 style="text-align: center;font-family:'Arial'; ">Log in</h2>                     
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="text" id="txtlogin"
-                           style="size:30px;width: 260px; font-family:'Arial'; height: 22px;"
-                           name="login"
-                           placeholder="Username"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="password" id="pwdlogin"
-                           style="size:30px;width: 260px; font-family:'Arial'; height: 22px;"
-                           name="senha"
-                           placeholder="Password"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="Button" style="font-size:18px; color: white; font-family:'Arial'; width: 268px; height: 40px;
-                           background-color: #347ab7; " value="Login">
-                </td>
-            </tr>
-            <tr>
+                <td><div class="espaco"></div></td>
                 <td>
-                    <input name="Remember me"  type="checkbox" id="chkRemember" value="RM"/> 
-                    <label for="chkRemember" style="font-size: 15px; font-family:'Arial';">Remember me</label>
+                    <h3 class="titulo">Basic 90</h3>
+                    <span> Free HTML5 Template Site</span>
                 </td>
-                <td>
-                    <a href="index.html" style="font-size: 15px; color: #347ab7; font-family:'Arial'; ">Forgot Password?</a>
+                <td align="right">
+                    <a class="entrar" href="login.jsp">Entrar</a>
                 </td>
+                <td><div class="espaco"></div></td>
+            </tr>
+            <tr>
+                <td><div class="espaco"></div></td>
+                <td colspan="2">
+                    <table cellpadding="15" class="tabela2" width="100%">
+                        <td width="5%"><a href="#">TEXT LINK</a></td>
+                        <td width="5%"><a href="#">TEXT LINK</a></td>
+                        <td width="5%"><a href="#">TEXT LINK</a></td>
+                        <td width="5%"><a href="#">TEXT LINK</a></td>
+                        <td width="5%"><a href="#">TEXT LINK</a></td>
+                        <td width="25%"></td>
+                    </table>
+                </td>
+                <td><div class="espaco"></div></td>
+            </tr>
+        </table>
+        <table width="100%" class="table2" cellspacing="0" cellpadding="20">
+            <tr>
+                <td><div class="espaco2"></div></td>
+                <td class="tdesq">
+                    <h1>
+                        Eu justo augue<br>
+                        estas
+                    </h1>
+                    <p id="meup1_1">
+                        Percebemos, cada vez mais, que a adoção<br> de políticas descentralizadoras<br> é uma das consequências das condições<br> inegavelmente apropriadas.
+                    </p>
+                    <p class="read">
+                        Read More >
+                    </p>
+                </td>
+                <td class="tddir">
+                    <p id="meup1_3">
+                        630 x 300px
+                    </p>
+                </td>
+                <td><div class="espaco2"></div></td>
             </tr>
         </table>
     </body>
