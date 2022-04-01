@@ -78,12 +78,25 @@
                     </p>
                 </td>
                 <td>
-                    <img src="img/130x130.gif" alt="Imagem" />
+
+                    <div class='bordas' >
+                        <img src="img/130x130.gif" alt="Imagem" />
+                    </div>
+
                 </td>
                 <td>
-                    <img src="img/130x130.gif" alt="Imagem" />
-                </td><td>
-                    <img src="img/130x130.gif" alt="Imagem" /><br>
+
+                    <div class='bordas' >
+                        <img src="img/130x130.gif" alt="Imagem" />
+                    </div>
+
+                </td>
+                <td>
+
+                    <div class='bordas' >
+                        <img src="img/130x130.gif" alt="Imagem" />
+                    </div>
+
                 </td>
                 <td><div class="espaco4"></div></td>
             </tr>

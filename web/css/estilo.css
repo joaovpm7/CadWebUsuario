@@ -16,8 +16,7 @@ body{
     margin-right: 0;
 }
 .espaco{
-    width: 50px;
-    background-color: #3C3C3C;
+    width: 240px;
 }
 .titulo{
     font-size: 30px;
@@ -52,7 +51,7 @@ a.entrar{
 }
 .tdesq{
     background-color: #464646;
-    font-size: 30px;
+    font-size: 15px;
     font-weight: bold;
 }
 #meup1_1{
@@ -67,7 +66,7 @@ a.entrar{
 }
 .tddir{
     background-color: #333333;
-    width: 1030px;
+    width: 630px;
     height: 300px;
 }
 #meup1_3{
@@ -82,7 +81,8 @@ a.entrar{
     border: 0;  
 }
 .espaco2{
-    width: 70px;
+    width: 380px;
+    
 }
 #meuh1{
     color: #989898;
@@ -93,7 +93,7 @@ a.entrar{
 }
 
 .espaco3{
-    width: 80px;
+    width: 340px;
 }
 
 .h1baixo{
@@ -110,12 +110,19 @@ a.entrar{
     text-align: center;
 }
 .espaco4{
-    width: 10px;
+    width: 320px;
 }
 .h3{
     color: #ff9900;
     text-align: center;
 }
 .espaco5{
-    width: 1270px;
+    width: 1070px;
+}
+
+.bordas{
+    padding: 3px;
+    border: 1px #AAA solid;
+    width: 130px;
+    height: 130px;
 }
