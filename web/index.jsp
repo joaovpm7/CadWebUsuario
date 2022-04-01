@@ -44,16 +44,18 @@
             <tr>
                 <td><div class="espaco2"></div></td>
                 <td class="tdesq">
-                    <h1>
-                        Eu justo augue<br>
-                        estas
-                    </h1>
-                    <p id="meup1_1">
-                        Percebemos, cada vez mais, que a adoção<br> de políticas descentralizadoras<br> é uma das consequências das condições<br> inegavelmente apropriadas.
-                    </p>
-                    <p class="read">
-                        Read More >
-                    </p>
+                    <div >
+                        <h1 id="meuh1">
+                            Eu justo augue<br>
+                            estas
+                        </h1>
+                        <p id="meup1_1">
+                            Percebemos, cada vez mais, que a adoção<br> de políticas descentralizadoras<br> é uma das consequências das condições<br> inegavelmente apropriadas.
+                        </p>
+                        <p class="read">
+                            Read More >
+                        </p>
+                    </div>
                 </td>
                 <td class="tddir">
                     <p id="meup1_3">
@@ -61,6 +63,37 @@
                     </p>
                 </td>
                 <td><div class="espaco2"></div></td>
+            </tr>
+        </table >
+        <table width="100%" class="table2">
+            <tr>
+                <td><div class="espaco3"></div></td>
+                <td>
+                    <h1 id="h1_2">Lorum ipsum dolor</h1>
+                    <p id="h1_2">
+                        This is a W3C standards compliant free HTML5 website template from <span style='color:orange;'>OS</span><br> <span style='color:orange;'>Templates.</span> This template is distributed using a <span style='color:orange;'>website template licence.</span><br>
+                    </p>
+                    <p id="h1_2">
+                        You can use and modify the template for both personal and commercial use. You<br> must keep all copyright information and credit links in the template and<br> associated files. For more HTML5 templates visit free <span style='color:orange;'>website templates.</span><br>
+                    </p>
+                </td>
+                <td>
+                    <img src="img/130x130.gif" alt="Imagem" />
+                </td>
+                <td>
+                    <img src="img/130x130.gif" alt="Imagem" />
+                </td><td>
+                    <img src="img/130x130.gif" alt="Imagem" /><br>
+                </td>
+                <td><div class="espaco4"></div></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><div class="espaco5"></div></td>
+                <td>
+                    <h3 class="h3">VIEW OUR IMAGE GALLERY HERE »</h3>
+                </td>
             </tr>
         </table>
     </body>
