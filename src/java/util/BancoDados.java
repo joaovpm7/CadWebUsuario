@@ -17,7 +17,7 @@ public class BancoDados {
      public static Connection getConexao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdlogin"
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdcliente"
                     + "?useTimezone=true&serverTimezone=America/Sao_Paulo&autoReconnect=true&useSSL=false",
                     "root", "123456");
             return conn;
@@ -26,5 +26,4 @@ public class BancoDados {
             return null;
         }
     }
-    
 }

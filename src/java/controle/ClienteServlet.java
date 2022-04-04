@@ -6,19 +6,21 @@
 package controle;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Usuario;
+import modelo.Cliente;
 
 /**
  *
- * @author João Victor Pereira Miranda
+ * @author sala305b
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/UsuarioServlet"})
-public class UsuarioServlet extends HttpServlet {
+@WebServlet(name = "ClienteServlet", urlPatterns = {"/ClienteServlet"})
+public class ClienteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,23 +33,48 @@ public class UsuarioServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        if(request.getParameter("login") != null &&
-                request.getParameter("senha") != null){
-            String login = request.getParameter("login");
-            String senha = request.getParameter("senha");
-            
-            Usuario user = new Usuario();
-            user.setLogin(login);
-            user.setSenha(senha);
-            boolean talogado = user.TemUsuario();
-            
-            //talogado == true
-            if(talogado){
-                request.setAttribute("idusuario", user);
-                request.getRequestDispatcher("tela/cadastro.jsp").forward(request, response);
+
+        if (request.getParameter("acao").equals("cadastrar")) {
+            String nome = request.getParameter("nome");
+            String tipoDocumento = request.getParameter("tipodocumento");
+            String documento = request.getParameter("documento");
+            String sexo = request.getParameter("sexo");
+            Date dataNascimento = Date.valueOf(request.getParameter("datanascimento"));
+            String email = request.getParameter("email");
+            String ddd = request.getParameter("ddd");
+            String telefone = request.getParameter("telefone");
+            String escolaridade = request.getParameter("escolaridade");
+            String cep = request.getParameter("cep");
+            String logradouro = request.getParameter("logradouro");
+            String numero = request.getParameter("numero");
+            String complemento = request.getParameter("complemento");
+            String bairro = request.getParameter("bairro");
+            String cidade = request.getParameter("cidade");
+            String uf = request.getParameter("uf");
+            Cliente cli = new Cliente();
+            cli.setNome(nome);
+            cli.setTipoDocumento(tipoDocumento);
+            cli.setDocumento(documento);
+            cli.setSexo(sexo);
+            cli.setDataNascimento(dataNascimento);
+            cli.setEmail(email);
+            cli.setDdd(ddd);
+            cli.setTelefone(telefone);
+            cli.setEscolaridade(escolaridade);
+            cli.setEmail(email);
+            cli.setCep(cep);
+            cli.setLogradouro(logradouro);
+            cli.setNumero(numero);
+            cli.setComplemento(complemento);
+            cli.setBairro(bairro);
+            cli.setCidade(cidade);
+            cli.setUf(uf);
+            long novoid = cli.Cadastrar();
+            if (novoid > 0) {
+                response.sendRedirect("listar.jsp");
             } else {
-                response.sendRedirect("tela/login.jsp?auth=false");
+                String mensagem = "<h1>Cadastro não Efetuado com Sucesso</h1>";
+                response.getWriter().print(mensagem);
             }
         }
     }

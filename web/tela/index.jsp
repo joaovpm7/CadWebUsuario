@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/estilo.css">
+        <link rel="stylesheet" href="../css/estilo.css">
         <title>Login</title>
     </head>
     <body>
@@ -80,21 +80,21 @@
                 <td>
 
                     <div class='bordas' >
-                        <img src="img/130x130.gif" alt="Imagem" />
+                        <img src="../img/130x130.gif" alt="Imagem" />
                     </div>
 
                 </td>
                 <td>
 
                     <div class='bordas' >
-                        <img src="img/130x130.gif" alt="Imagem" />
+                        <img src="../img/130x130.gif" alt="Imagem" />
                     </div>
 
                 </td>
                 <td>
 
                     <div class='bordas' >
-                        <img src="img/130x130.gif" alt="Imagem" />
+                        <img src="../img/130x130.gif" alt="Imagem" />
                     </div>
 
                 </td>

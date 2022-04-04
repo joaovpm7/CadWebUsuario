@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="../css/bootstrap.css" />
+        <link rel="stylesheet" href="css/bootstrap.css" />
 
     </head>
     <body>
@@ -147,7 +147,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="">CEP:</label><br/>
+                        <label for="txtCEP">CEP:</label><br/>
                         <input id="txtCEP" size="30" type="text" name="cep" />
                     </td>
                     <td>
@@ -216,14 +216,14 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <input type="submit" value="Salvar" />
+                        <input class="btn btn-primary" type="submit" value="Salvar" />
                     </td>
                 </tr>
             </table>
         </form>
-        <script type="text/javascript" src="../js/bootstrap.js"></script>
-        <script type="text/javascript" src="../js/jquery.js"></script>
-        <script type="text/javascript" src="../js/jquery.mask.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery.mask.js"></script>
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
 
@@ -240,8 +240,10 @@
                 $("#txtDddTelefone").on("click", function (e) {
                     $("#txtDddTelefone").mask("(00) 00000-0000");
                 });
+                $("#txtCEP").on("click", function (e) {
+                    $("#txtCEP").mask("00000-000");
+                });
             });
-
         </script>
     </body>
 </html>
