@@ -109,5 +109,6 @@
                 </td>
             </tr>
         </table>
+        <hr size="1">
     </body>
 </html>
