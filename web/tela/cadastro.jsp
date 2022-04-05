@@ -4,7 +4,48 @@
     Author     : sala305b
 --%>
 
+<%@page import="modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String acao = "cadastrar", idcliente = "", nome = "", datanascimento = "",
+            documento = "", tipodocumento = "", escolaridade = "", sexo = "", dddtelefone = "",
+            email = "", cep = "", logradouro = "", numero = "", bairro = "", cidade = "", uf = "",
+            complemento = "", datacadastro = "", ddd = "", telefone = "";
+
+    Cliente clie = new Cliente();
+    if (request.getParameter("acao") != null) {
+        if (request.getParameter("acao").equals("editar")) {
+
+            idcliente = request.getParameter("idcliente");
+            boolean achou = clie.BuscarPorId(idcliente);
+            if (!achou) {
+                out.print("<script>"
+                        + "window.alert('Cliente não Encontrado');"
+                        + "</script>");
+            } else {
+                acao = "editar";
+                idcliente = String.valueOf(clie.getId());
+                nome = clie.getNome();
+                tipodocumento = clie.getTipoDocumento();
+                documento = clie.getDocumento();
+                sexo = clie.getSexo();
+                datanascimento = String.valueOf(clie.getDataNascimento());
+                ddd = clie.getDdd();
+                telefone = clie.getTelefone();
+                escolaridade = clie.getEscolaridade();
+                email = clie.getEmail();
+                cep = clie.getCep();
+                logradouro = clie.getLogradouro();
+                numero = clie.getNumero();
+                complemento = clie.getComplemento();
+                bairro = clie.getBairro();
+                cidade = clie.getCidade();
+                uf = clie.getUf();
+                datacadastro = String.valueOf(clie.getDataCadastro());
+            }
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,12 +62,12 @@
     </head>
     <body>
         <form action="ClienteServlet" method="POST">
-            <input type="hidden" name="acao" value="">
+            <input type="hidden" name="acao" value="<%=acao%>">
             <table border="0" cellspacing="0" cellpadding="5">
                 <tr>
                     <td>
                         <label for="">ID:</label><br/>
-                        <input size="5" value=""
+                        <input size="5" value="<%=idcliente%>"
                                type="text" name="idcliente" />
                     </td>
                     <td>
@@ -36,19 +77,19 @@
                     <td>
                         <label for="">Nome Completo:</label><br/>
                         <input size="30" 
-                               value=""
+                               value="<%=nome%>"
                                type="text" name="nome" />
                     </td>
                     <td>
                         <label for="">Data de Nascimento:</label><br/>
-                        <input size="30"  value=""
+                        <input size="30"  value="<%=datanascimento%>"
                                type="date" name="datanascimento" />
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="">Documento:</label><br/>
-                        <input size="30" id="txtDocumento"  value=""
+                        <input size="30" id="txtDocumento"  value="<%=documento%>"
                                type="text" name="documento" />
                     </td>
                     <td>
@@ -63,22 +104,22 @@
                                     <input id="rdbCPF"
                                            checked="checked"
                                            type="radio" 
-                                           name="tpdocumento"
-                                           value="CPF"/>
+                                           name="tipodocumento"
+                                           value="<%=tipodocumento.equals("CPF") ? "checked" : ""%>"/>
                                     <label for="rdbCPF">CPF</label>
                                 </td>
                                 <td>
                                     <input id="rdbCNH"
                                            type="radio" 
                                            name="tpdocumento"
-                                           value="CNH"/>
+                                           value="<%=tipodocumento.equals("CNH") ? "checked" : ""%>"/>
                                     <label for="rdbCNH">CNH</label> 
                                 </td>
                                 <td>
                                     <input id="rdbRG"
                                            type="radio" 
                                            name="tpdocumento"
-                                           value="RG"/>
+                                           value="<%=tipodocumento.equals("RG") ? "checked" : ""%>"/>
                                     <label for="rdbRG">RG</label>
                                 </td>
                             </tr>
@@ -89,13 +130,13 @@
                     <td>
                         <label for="sltEscolaridade">Escolaridade:</label>
                         <select id="sltEscolaridade" name="escolaridade">
-                            <option
+                            <option <%= escolaridade.equals("EM") ? "selected": "" %> 
                                 value="EM">Ensino Médio</option>
-                            <option
+                            <option <%= escolaridade.equals("ET") ? "selected": "" %>
                                 value="ET">Ensino Técnico</option>
-                            <option
+                            <option <%= escolaridade.equals("ES") ? "selected": "" %>
                                 value="ES">Ensino Superior</option>
-                            <option 
+                            <option <%= escolaridade.equals("PG") ? "selected": "" %>
                                 value="PG">Pós Graduação</option>
                         </select>
                     </td>
@@ -111,21 +152,21 @@
                                     <input id="rdbM"
                                            type="radio" 
                                            name="sexo"
-                                           value="M"/>
+                                           value="<%=tipodocumento.equals("M") ? "checked" : ""%>"/>
                                     <label for="rdbM">Masculino</label>
                                 </td>
                                 <td>
                                     <input id="rdbF"
                                            type="radio" 
                                            name="sexo"
-                                           value="F"/>
+                                           value="<%=tipodocumento.equals("F") ? "checked" : ""%>"/>
                                     <label for="rdbF">Feminino</label> 
                                 </td>
                                 <td>
                                     <input id="rdbO"
                                            type="radio" 
                                            name="sexo"
-                                           value="O"/>
+                                           value="<%=tipodocumento.equals("O") ? "checked" : ""%>"/>
                                     <label for="rdbO">Outro</label>
                                 </td>
                             </tr>
@@ -137,18 +178,18 @@
                         <label for="txtDddTelefone">DDD/Telefone:</label><br/>
                         <input size="30"
                                id="txtDddTelefone"
-                               type="text" name="dddtelefone" />
+                               type="text" name="dddtelefone" value="<%=dddtelefone%>" />
                     </td>
                     <td>
                         <label for="">Email:</label><br/>
-                        <input size="30"  value=""
+                        <input size="30"  value="<%=email%>"
                                type="email" name="email" />
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="txtCEP">CEP:</label><br/>
-                        <input id="txtCEP" size="30" type="text" name="cep" />
+                        <input id="txtCEP" size="30" type="text" name="cep" value="<%=cep%>" />
                     </td>
                     <td>
                     </td>
@@ -159,11 +200,11 @@
                             <tr>
                                 <td width="90%">
                                     <label for="">Logradouro:</label><br/>
-                                    <input size="55"type="text" name="logradouro" />
+                                    <input size="55"type="text" name="logradouro" value="<%=logradouro%>" />
                                 </td>
                                 <td width="10%">
                                     <label for="">Numero:</label><br/>
-                                    <input size="5" type="email" name="numero" />
+                                    <input size="5" type="text" name="numero" value="<%=numero%>" />
                                 </td>
                             </tr>
                         </table>
@@ -172,45 +213,72 @@
                 <tr>
                     <td>
                         <label for="">Bairro:</label><br/>
-                        <input size="30" type="text" name="bairro" />
+                        <input size="30" type="text" name="bairro" value="<%=bairro%>" />
                     </td>
                     <td>
                         <label for="">Cidade:</label><br/>
-                        <input size="30" type="email" name="cidade" />
+                        <input size="30" type="text" name="cidade" value="<%=cidade%>" />
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="">UF:</label><br/>
-                        <select id="sltEstado" name="uf">
+                        <select id="sltEstado" name="uf" value="<%=uf%>">
                             <option value="">Selecione</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espirito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PR">Paraná</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RR">Roraima</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="TO">Tocantins</option>
+                            <option <%= uf.equals("AC") ? "selected": "" %>
+                                value="AC">Acre</option>
+                            <option <%= uf.equals("AL") ? "selected": "" %>
+                                value="AL">Alagoas</option>
+                            <option <%= uf.equals("AP") ? "selected": "" %>
+                                value="AP">Amapá</option>
+                            <option <%= uf.equals("AM") ? "selected": "" %>
+                                value="AM">Amazonas</option>
+                            <option <%= uf.equals("BA") ? "selected": "" %>
+                                value="BA">Bahia</option>
+                            <option <%= uf.equals("PG") ? "selected": "" %>
+                                value="CE">Ceará</option>
+                            <option <%= uf.equals("DF") ? "selected": "" %>
+                                value="DF">Distrito Federal</option>
+                            <option <%= uf.equals("ES") ? "selected": "" %>
+                                value="ES">Espirito Santo</option>
+                            <option <%= uf.equals("GO") ? "selected": "" %>
+                                value="GO">Goiás</option>
+                            <option <%= uf.equals("MA") ? "selected": "" %>
+                                value="MA">Maranhão</option>
+                            <option <%= uf.equals("MS") ? "selected": "" %>
+                                value="MS">Mato Grosso do Sul</option>
+                            <option <%= uf.equals("MT") ? "selected": "" %>
+                                value="MT">Mato Grosso</option>
+                            <option <%= uf.equals("MG") ? "selected": "" %>
+                                value="MG">Minas Gerais</option>
+                            <option <%= uf.equals("PA") ? "selected": "" %>
+                                value="PA">Pará</option>
+                            <option <%= uf.equals("PB") ? "selected": "" %>
+                                value="PB">Paraíba</option>
+                            <option <%= uf.equals("PR") ? "selected": "" %>
+                                value="PR">Paraná</option>
+                            <option <%= uf.equals("PE") ? "selected": "" %>
+                                value="PE">Pernambuco</option>
+                            <option <%= uf.equals("PT") ? "selected": "" %>
+                                value="PI">Piauí</option>
+                            <option <%= uf.equals("RJ") ? "selected": "" %>
+                                value="RJ">Rio de Janeiro</option>
+                            <option <%= uf.equals("RN") ? "selected": "" %>
+                                value="RN">Rio Grande do Norte</option>
+                            <option <%= uf.equals("RS") ? "selected": "" %>
+                                value="RS">Rio Grande do Sul</option>
+                            <option <%= uf.equals("RO") ? "selected": "" %>
+                                value="RO">Rondônia</option>
+                            <option <%= uf.equals("RR") ? "selected": "" %>
+                                value="RR">Roraima</option>
+                            <option <%= uf.equals("SC") ? "selected": "" %>
+                                value="SC">Santa Catarina</option>
+                            <option <%= uf.equals("SP") ? "selected": "" %>
+                                value="SP">São Paulo</option>
+                            <option <%= uf.equals("SE") ? "selected": "" %>
+                                value="SE">Sergipe</option>
+                            <option <%= uf.equals("TO") ? "selected": "" %>
+                                value="TO">Tocantins</option>
                         </select>
                     </td>
                 </tr>
@@ -238,7 +306,7 @@
                     $("#txtDocumento").mask("000.000.000-00");
                 });
                 $("#txtDddTelefone").on("click", function (e) {
-                    $("#txtDddTelefone").mask("(00) 00000-0000");
+                    $("#txtDddTelefone").mask("(00) 0000-0000");
                 });
                 $("#txtCEP").on("click", function (e) {
                     $("#txtCEP").mask("00000-000");

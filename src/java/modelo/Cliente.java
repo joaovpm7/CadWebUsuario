@@ -203,7 +203,7 @@ public class Cliente {
                     + "sexo, dtnascimento, ddd, telefone, "
                     + "escolaridade, email, cep, logradouro,"
                     + " numero, complemento, bairro, cidade, uf) ";
-            sql += " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            sql += " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
             PreparedStatement ps = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, this.getNome());
@@ -214,13 +214,14 @@ public class Cliente {
             ps.setString(6, this.getDdd());
             ps.setString(7, this.getTelefone());
             ps.setString(8, this.getEscolaridade());
-            ps.setString(9, this.getCep());
-            ps.setString(10, this.getLogradouro());
-            ps.setString(11, this.getNumero());
-            ps.setString(12, this.getComplemento());
-            ps.setString(13, this.getBairro());
-            ps.setString(14, this.getCidade());
-            ps.setString(15, this.getUf());
+            ps.setString(9, this.getEmail());
+            ps.setString(10, this.getCep());
+            ps.setString(11, this.getLogradouro());
+            ps.setString(12, this.getNumero());
+            ps.setString(13, this.getComplemento());
+            ps.setString(14, this.getBairro());
+            ps.setString(15, this.getCidade());
+            ps.setString(16, this.getUf());
             int linhasafetadas = ps.executeUpdate();
             if (linhasafetadas > 0) {
                 final ResultSet rs = ps.getGeneratedKeys();
@@ -249,20 +250,20 @@ public class Cliente {
             List<Cliente> lista = new ArrayList();
             final ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                //id, idusuario, nome, tpdocumento, documento, sexo, dtnascimento, ddd, telefone, escolaridade, email, cep, logradouro, numero, complemento, bairro, cidade, uf, dtcadastro
+                //id, idusuario, nome, tpdocumento, documento, sexo, dtnascimento, ddd, telefone, escolaridade, email, cep, logradouro,
+                //numero, complemento, bairro, cidade, uf, dtcadastro
                 Cliente cli = new Cliente();
                 cli.setId(rs.getInt("id"));
                 Usuario user = new Usuario();
                 user.setId(rs.getLong("idusuario"));
                 cli.setUser(user);
+                cli.setNome("nome");
                 cli.setTipoDocumento(rs.getString("tipodocumento"));
                 cli.setDocumento(rs.getString("documento"));
                 cli.setSexo(rs.getString("sexo"));
                 cli.setDataNascimento(rs.getDate("datanascimento"));
                 cli.setDdd(rs.getString("ddd"));
                 cli.setTelefone(rs.getString("telefone"));
-                cli.setEscolaridade(rs.getString("escolaridade"));
-                cli.setUf(rs.getString("uf"));
                 cli.setDataCadastro(rs.getTimestamp("datacadastro"));
                 lista.add(cli);
             }
@@ -270,6 +271,115 @@ public class Cliente {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public boolean BuscarPorId(String id) {
+        try {
+            long idcli = Long.parseLong(id);
+            Connection conn = BancoDados.getConexao();
+            String sql = "SELECT * FROM tb_cliente WHERE id = ?; ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, idcli);
+            final ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                //id, idusuario, nome, tpdocumento, documento, sexo, dtnascimento, ddd, telefone, escolaridade, email, cep, logradouro, numero, complemento, bairro, cidade, uf, dtcadastro
+                this.setId(rs.getInt("id"));
+                this.setNome(rs.getString("nome"));
+                this.setTipoDocumento(rs.getString("tipodocumento"));
+                this.setDocumento(rs.getString("documento"));
+                this.setSexo(rs.getString("sexo"));
+                this.setDataNascimento(rs.getDate("datanascimento"));
+                this.setDdd(rs.getString("ddd"));
+                this.setTelefone(rs.getString("telefone"));
+                this.setEscolaridade(rs.getString("escolaridade"));
+                this.setEmail(rs.getString("email"));
+                this.setLogradouro(rs.getString("logradouro"));
+                this.setComplemento(rs.getString("complemento"));
+                this.setBairro(rs.getString("bairro"));
+                this.setCidade(rs.getString("cidade"));
+                this.setUf(rs.getString("uf"));
+                this.setDataCadastro(rs.getTimestamp("datacadastro"));
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean Atualizar() {
+        try {
+            Connection conn = BancoDados.getConexao(); //conectar com o bando de dados e enviar os dados salvos da classe Contato.
+            //id, idusuario, nome, tpdocumento, documento, sexo, dtnascimento, ddd, telefone, escolaridade, email,
+            //cep, logradouro, numero, complemento, bairro, cidade, uf, dtcadastro
+            String sql = "UPDATE tb_cliente ";
+            sql += " SET nome = ?, ";
+            sql += " tpdocumento = ?, ";
+            sql += " documento = ?, ";
+            sql += " sexo = ?, ";
+            sql += " dtnascimento = ?, ";
+            sql += " ddd = ?, ";
+            sql += " telefone = ?, ";
+            sql += " escolaridade = ?, ";
+            sql += " email = ?, ";
+            sql += " cep = ?, ";
+            sql += " logradouro = ?, ";
+            sql += " numero = ?, ";
+            sql += " complemento = ?, ";
+            sql += " bairro = ?, ";
+            sql += " cidade = ?, ";
+            sql += " uf = ? ";
+            sql += " WHERE id = ?; ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, this.getNome());
+            ps.setString(2, this.getTipoDocumento());
+            ps.setString(3, this.getDocumento());
+            ps.setString(4, this.getSexo());
+            ps.setDate(5, this.getDataNascimento());
+            ps.setString(6, this.getDdd());
+            ps.setString(7, this.getTelefone());
+            ps.setString(8, this.getEscolaridade());
+            ps.setString(9, this.getEmail());
+            ps.setString(10, this.getCep());
+            ps.setString(11, this.getLogradouro());
+            ps.setString(12, this.getNumero());
+            ps.setString(13, this.getComplemento());
+            ps.setString(14, this.getBairro());
+            ps.setString(15, this.getCidade());
+            ps.setString(16, this.getUf());
+            ps.setLong(17, this.getId());
+            int linhasafetadas = ps.executeUpdate();
+            if (linhasafetadas > 0) {
+                System.out.println("atualizou!");
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean Excluir(long id) {
+        try {
+            Connection conn = BancoDados.getConexao();
+            String sql = "DELETE FROM tb_cliente  WHERE id = ?; ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, id);
+            int linhasafetadas = ps.executeUpdate();
+            if (linhasafetadas > 0) {
+                System.out.println("Apagou!!");
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro: " + e.getMessage());
+            return false;
         }
     }
 }
