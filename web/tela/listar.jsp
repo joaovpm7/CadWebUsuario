@@ -7,6 +7,11 @@
 <%@page import="java.util.List"%>
 <%@page import="modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String idusuario = String.valueOf(
+            request.getAttribute("idusuario"));
+    List<Cliente> clientes = new Cliente().ListarCliente();
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,9 +19,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%
-            List<Cliente> clientes = new Cliente().ListarCliente();
-        %>
         <table border="1" cellspacing="0" cellpadding="5">
             <tr>
                 <th>ID</th>
@@ -56,7 +58,7 @@
                     out.print("<td>");
                     out.print(c.getDdd());
                     out.print("</td>");
-                    
+
                     out.print("<td>");
                     out.print(c.getTelefone());
                     out.print("</td>");
@@ -70,7 +72,7 @@
                     out.print("<div style='display:inline-block'>");;
                     out.print("<form action='index.jsp' method='POST'>");
                     out.print("<input name='idusuario' type='hidden' value='editar' />");
-                    out.print("<input name='idcliente' type='hidden' value='" + c.getId()+ "' />");
+                    out.print("<input name='idcliente' type='hidden' value='" + c.getId() + "' />");
                     out.print("<button type='submit'>Editar</button>");
                     out.print("</form>");
                     out.print("</div>");

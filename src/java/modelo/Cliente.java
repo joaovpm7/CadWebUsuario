@@ -245,33 +245,49 @@ public class Cliente {
         }
     }
 
-    public List<Cliente> ListarCliente() {
+    public List<Cliente> ListarTodos() {
         try {
+
             Connection conn = BancoDados.getConexao();
-            String sql = "SELECT * FROM tb_cliente; ";
+            String sql = "SELECT c.*, u.* "
+                    + " FROM tb_cliente c "
+                    + " JOIN tb_usuario u "
+                    + " ON c.idusuario = u.id;";
             PreparedStatement ps = conn.prepareStatement(sql);
             List<Cliente> lista = new ArrayList();
             final ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                //id, idusuario, nome, tpdocumento, documento, sexo, dtnascimento, ddd, telefone, escolaridade, email, cep, logradouro,
-                //numero, complemento, bairro, cidade, uf, dtcadastro
-                Cliente cli = new Cliente();
-                cli.setId(rs.getInt("id"));
-                cli.setNome(rs.getString("nome"));
-                //exibir o id
-                Usuario user = new Usuario();
-                user.setId(rs.getLong("idusuario"));
-                cli.setUser(user);
-                //exibir o responsavel...
-                cli.setTipoDocumento(rs.getString("tpdocumento"));
-                cli.setDocumento(rs.getString("documento"));
-                cli.setDataNascimento(rs.getDate("dtnascimento"));
-                cli.setDdd(rs.getString("ddd"));
-                cli.setTelefone(rs.getString("telefone"));
-                cli.setDataCadastro(rs.getTimestamp("dtcadastro"));
-                lista.add(cli);
+                Cliente c = new Cliente();
+                c.setId(rs.getLong("c.id"));
+                c.setUser(new Usuario());
+                c.getUser().setId(rs.getLong("idusuario"));
+                c.getUser().setResponsavel(
+                        rs.getString("responsavel"));
+                c.getUser().setLogin(rs.getString("login"));
+                c.getUser().setSenha(rs.getString("senha"));
+                c.getUser().setDataCadastro(
+                        rs.getTimestamp("u.dtcadastro"));
+                c.setNome(rs.getString("nome"));
+                c.setTipoDocumento(rs.getString("tpdocumento"));
+                c.setDocumento(rs.getString("documento"));
+                c.setSexo(rs.getString("sexo"));
+                c.setDdd(rs.getString("ddd"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setEscolaridade(rs.getString("escolaridade"));
+                c.setDataNascimento(rs.getDate("dtnascimento"));
+                c.setEmail(rs.getString("email"));
+                c.setCep(rs.getString("cep"));
+                c.setLogradouro(rs.getString("logradouro"));
+                c.setNumero(rs.getString("numero"));
+                c.setComplemento(rs.getString("complemento"));
+                c.setBairro(rs.getString("bairro"));
+                c.setCidade(rs.getString("cidade"));
+                c.setUf(rs.getString("uf"));
+                c.setDataCadastro(rs.getTimestamp("c.dtcadastro"));
+                lista.add(c);
             }
             return lista;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
