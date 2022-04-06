@@ -4,9 +4,11 @@
     Author     : sala305b
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
+    Usuario user = (Usuario) request.getAttribute("idusuario");
     String acao = "cadastrar", idcliente = "", nome = "", datanascimento = "",
             documento = "", tipodocumento = "", escolaridade = "", sexo = "", dddtelefone = "",
             email = "", cep = "", logradouro = "", numero = "", bairro = "", cidade = "", uf = "",
@@ -62,7 +64,7 @@
     </head>
     <body>
         <form action="ClienteServlet" method="POST">
-            <input type="hidden" name="acao" value="<%=acao%>">
+            <input type="hidden" name="idusuario" value="<%= user.getId() %>">
             <table border="0" cellspacing="0" cellpadding="5">
                 <tr>
                     <td>

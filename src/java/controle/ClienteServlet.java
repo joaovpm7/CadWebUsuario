@@ -33,7 +33,7 @@ public class ClienteServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getParameter("acao").equals("editar")) {
+        if (request.getParameter("idusuario").equals("editar")) {
             String idcliente = request.getParameter("idcliente");
             String nome = request.getParameter("nome");
             String tipoDocumento = request.getParameter("tipodocumento");
@@ -78,7 +78,7 @@ public class ClienteServlet extends HttpServlet {
                         = "<h1>Edição não Efetuado com Sucesso</h1>";
                 response.getWriter().print(mensagem);
             }
-        } else if (request.getParameter("acao").equals("apagar")) {
+        } else if (request.getParameter("idusuario").equals("apagar")) {
             int client = Integer.parseInt(request.getParameter("idcliente"));
             Cliente.Excluir(client);
             String mensagem
