@@ -194,51 +194,54 @@ public class Cliente {
         this.numero = numero;
     }
 
-    public long Cadastrar() {
+    public boolean Cadastrar() {
         try {
-
             Connection conn = BancoDados.getConexao();
             String sql = "INSERT INTO tb_cliente ";
-            sql += " (nome, tpdocumento, documento, "
-                    + "sexo, dtnascimento, ddd, telefone, "
-                    + "escolaridade, email, cep, logradouro,"
-                    + " numero, complemento, bairro, cidade, uf) ";
-            sql += " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            sql += " (idusuario, nome, tpdocumento, "
+                    + "documento, sexo, dtnascimento, "
+                    + "ddd, telefone,escolaridade, email, "
+                    + "cep, logradouro, numero, "
+                    + "complemento, bairro, cidade, uf) ";
+            sql += " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
             PreparedStatement ps = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, this.getNome());
-            ps.setString(2, this.getTipoDocumento());
-            ps.setString(3, this.getDocumento());
-            ps.setString(4, this.getSexo());
-            ps.setDate(5, this.getDataNascimento());
-            ps.setString(6, this.getDdd());
-            ps.setString(7, this.getTelefone());
-            ps.setString(8, this.getEscolaridade());
-            ps.setString(9, this.getEmail());
-            ps.setString(10, this.getCep());
-            ps.setString(11, this.getLogradouro());
-            ps.setString(12, this.getNumero());
-            ps.setString(13, this.getComplemento());
-            ps.setString(14, this.getBairro());
-            ps.setString(15, this.getCidade());
-            ps.setString(16, this.getUf());
+            ps.setLong(1, this.getUser().getId());
+            ps.setString(2, this.getNome());
+            ps.setString(3, this.getTipoDocumento());
+            ps.setString(4, this.getDocumento());
+            ps.setString(5, this.getSexo());
+            ps.setDate(6, this.getDataNascimento());
+            ps.setString(7, this.getDdd());
+            ps.setString(8, this.getTelefone());
+            ps.setString(9, this.getEscolaridade());
+            ps.setString(10, this.getEmail());
+            ps.setString(11, this.getCep());
+            ps.setString(12, this.getLogradouro());
+            ps.setString(13, this.getNumero());
+            ps.setString(14, this.getComplemento());
+            ps.setString(15, this.getBairro());
+            ps.setString(16, this.getCidade());
+            ps.setString(17, this.getUf());
             int linhasafetadas = ps.executeUpdate();
             if (linhasafetadas > 0) {
                 final ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
                     final long lastId = rs.getLong(1);
-                    System.out.println("O numero do id é:"
-                            + lastId);
-                    return lastId;
+                    this.setId(lastId);
+                    System.out.println(
+                            "O id do cliente é:" + lastId);
+                    return true;
                 } else {
-                    return 0;
+                    return false;
                 }
             } else {
-                return 0;
+                return false;
             }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return 0;
+            return false;
         }
     }
 
@@ -254,17 +257,18 @@ public class Cliente {
                 //numero, complemento, bairro, cidade, uf, dtcadastro
                 Cliente cli = new Cliente();
                 cli.setId(rs.getInt("id"));
+                cli.setNome(rs.getString("nome"));
+                //exibir o id
                 Usuario user = new Usuario();
                 user.setId(rs.getLong("idusuario"));
                 cli.setUser(user);
-                cli.setNome("nome");
-                cli.setTipoDocumento(rs.getString("tipodocumento"));
+                //exibir o responsavel...
+                cli.setTipoDocumento(rs.getString("tpdocumento"));
                 cli.setDocumento(rs.getString("documento"));
-                cli.setSexo(rs.getString("sexo"));
-                cli.setDataNascimento(rs.getDate("datanascimento"));
+                cli.setDataNascimento(rs.getDate("dtnascimento"));
                 cli.setDdd(rs.getString("ddd"));
                 cli.setTelefone(rs.getString("telefone"));
-                cli.setDataCadastro(rs.getTimestamp("datacadastro"));
+                cli.setDataCadastro(rs.getTimestamp("dtcadastro"));
                 lista.add(cli);
             }
             return lista;

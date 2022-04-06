@@ -20,14 +20,14 @@
         <table border="1" cellspacing="0" cellpadding="5">
             <tr>
                 <th>ID</th>
-                <th>Usuario</th>
+                <th>Responsavel</th>
                 <th>Nome</th>
-                <th>Tipo Documento</th>
                 <th>Documento</th>
-                <th>Sexo</th>
                 <th>Data Nascimento</th>
-                <th>DDD/Telefone</th>
+                <th>DDD</th>
+                <th>Telefone</th>
                 <th>Data Cadastro</th>
+                <th>Opções</th>
             </tr>
             <%
                 for (Cliente c : clientes) {
@@ -38,7 +38,7 @@
                     out.print("</td>");
 
                     out.print("<td>");
-                    out.print(c.getUser());
+                    out.print(c.getUser().getResponsavel());
                     out.print("</td>");
 
                     out.print("<td>");
@@ -46,15 +46,7 @@
                     out.print("</td>");
 
                     out.print("<td>");
-                    out.print(c.getTipoDocumento());
-                    out.print("</td>");
-
-                    out.print("<td>");
                     out.print(c.getDocumento());
-                    out.print("</td>");
-
-                    out.print("<td>");
-                    out.print(c.getSexo());
                     out.print("</td>");
 
                     out.print("<td>");
@@ -62,7 +54,11 @@
                     out.print("</td>");
 
                     out.print("<td>");
-                    out.print(c.getDdd() + c.getTelefone());
+                    out.print(c.getDdd());
+                    out.print("</td>");
+                    
+                    out.print("<td>");
+                    out.print(c.getTelefone());
                     out.print("</td>");
 
                     out.print("<td>");
@@ -73,8 +69,8 @@
 
                     out.print("<div style='display:inline-block'>");;
                     out.print("<form action='index.jsp' method='POST'>");
-                    out.print("<input name='acao' type='hidden' value='editar' />");
-                    out.print("<input name='idcliente' type='hidden' value='" + c.getId() + "' />");
+                    out.print("<input name='idusuario' type='hidden' value='editar' />");
+                    out.print("<input name='idcliente' type='hidden' value='" + c.getId()+ "' />");
                     out.print("<button type='submit'>Editar</button>");
                     out.print("</form>");
                     out.print("</div>");
@@ -84,7 +80,7 @@
 
                     out.print("<div style='display:inline-block'>");
                     out.print("<form action='ClienteServlet' method='POST'>");
-                    out.print("<input name='acao' type='hidden' value='apagar' />");
+                    out.print("<input name='idusuario' type='hidden' value='apagar' />");
                     out.print("<input name='idcliente' type='hidden' value='" + c.getId() + "' />");
                     out.print("<button type='submit'>Deletar</button>");
                     out.print("</form>");

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Cliente;
+import modelo.Usuario;
 
 /**
  *
@@ -38,7 +39,6 @@ public class ClienteServlet extends HttpServlet {
             String nome = request.getParameter("nome");
             String tipoDocumento = request.getParameter("tipodocumento");
             String documento = request.getParameter("documento");
-            String sexo = request.getParameter("sexo");
             Date dataNascimento = Date.valueOf(request.getParameter("datanascimento"));
             String email = request.getParameter("email");
             String ddd = request.getParameter("ddd");
@@ -56,7 +56,6 @@ public class ClienteServlet extends HttpServlet {
             cli.setNome(nome);
             cli.setTipoDocumento(tipoDocumento);
             cli.setDocumento(documento);
-            cli.setSexo(sexo);
             cli.setDataNascimento(dataNascimento);
             cli.setEmail(email);
             cli.setDdd(ddd);
@@ -100,6 +99,7 @@ public class ClienteServlet extends HttpServlet {
             String cidade = request.getParameter("cidade");
             String uf = request.getParameter("uf");
             String dddtelefone = request.getParameter("dddtelefone");
+            String idusuario = request.getParameter("idusuario");
             Cliente cli = new Cliente();
             cli.setNome(nome);
             cli.setTipoDocumento(tipoDocumento);
@@ -115,38 +115,39 @@ public class ClienteServlet extends HttpServlet {
             cli.setBairro(bairro);
             cli.setCidade(cidade);
             cli.setUf(uf);
-
+            //registrando ID do usuario
+            Usuario us = new Usuario();
+            us.setId(Long.parseLong(idusuario));
+            cli.setUser(us);
             String dddTelLimpo = dddtelefone.replace(" ", " ")//limpar a mascara
                     .replace("-", "")
                     .replace("(", "")
                     .replace(")", "");
-
             String ddd = dddTelLimpo.substring(0, 2);//27 99239446 de 0 até 2 então ele só pega os numeros 2 e 7
             //que é o DDD. (O 9 não pegaria, para no 2)
-
             //telefone fixo ou celular
             String telefone = dddTelLimpo.length() == 10
                     ? dddTelLimpo.substring(2, 6)
                     + "-" + dddTelLimpo.substring(6)
                     : dddTelLimpo.substring(2, 7)
                     + "-" + dddTelLimpo.substring(7);
-
             cli.setDdd(ddd);
             cli.setTelefone(telefone);
-
-            long novoid = cli.Cadastrar();
-            if (novoid > 0) {
+            boolean novoid = cli.Cadastrar();
+            if (novoid) {
                 //Somente redireciona a página escolhida
-                response.sendRedirect("listar.jsp");
+                request.setAttribute("idusuario", cli.getUser().getId());
+                request.getRequestDispatcher("tele/listar.jsp")
+                        .forward(request, response);
             } else {
-                String mensagem
-                        = "<h1>Cadastro não Efetuado com Sucesso</h1>";
-                response.getWriter().print(mensagem);
+                request.setAttribute("idusuario", cli.getUser());
+                request.getRequestDispatcher("cadastrar.jsp")
+                        .forward(request, response);
             }
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

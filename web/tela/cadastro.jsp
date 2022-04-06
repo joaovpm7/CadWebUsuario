@@ -10,7 +10,7 @@
 <%
     Usuario user = (Usuario) request.getAttribute("idusuario");
     String acao = "cadastrar", idcliente = "", nome = "", datanascimento = "",
-            documento = "", tipodocumento = "", escolaridade = "", sexo = "", dddtelefone = "",
+            documento = "", escolaridade = "", tipocumento = "", sexo = "", dddtelefone = "",
             email = "", cep = "", logradouro = "", numero = "", bairro = "", cidade = "", uf = "",
             complemento = "", datacadastro = "", ddd = "", telefone = "";
 
@@ -28,9 +28,7 @@
                 acao = "editar";
                 idcliente = String.valueOf(clie.getId());
                 nome = clie.getNome();
-                tipodocumento = clie.getTipoDocumento();
                 documento = clie.getDocumento();
-                sexo = clie.getSexo();
                 datanascimento = String.valueOf(clie.getDataNascimento());
                 ddd = clie.getDdd();
                 telefone = clie.getTelefone();
@@ -104,24 +102,23 @@
                             <tr>
                                 <td>
                                     <input id="rdbCPF"
-                                           checked="checked"
                                            type="radio" 
                                            name="tipodocumento"
-                                           value="<%=tipodocumento.equals("CPF") ? "checked" : ""%>"/>
+                                           value="CPF"/>
                                     <label for="rdbCPF">CPF</label>
                                 </td>
                                 <td>
                                     <input id="rdbCNH"
                                            type="radio" 
-                                           name="tpdocumento"
-                                           value="<%=tipodocumento.equals("CNH") ? "checked" : ""%>"/>
+                                           name="tipodocumento"
+                                           value="CNH"/>
                                     <label for="rdbCNH">CNH</label> 
                                 </td>
                                 <td>
                                     <input id="rdbRG"
                                            type="radio" 
-                                           name="tpdocumento"
-                                           value="<%=tipodocumento.equals("RG") ? "checked" : ""%>"/>
+                                           name="tipodocumento"
+                                           value="RG"/>
                                     <label for="rdbRG">RG</label>
                                 </td>
                             </tr>
@@ -154,21 +151,21 @@
                                     <input id="rdbM"
                                            type="radio" 
                                            name="sexo"
-                                           value="<%=tipodocumento.equals("M") ? "checked" : ""%>"/>
+                                           value="M"/>
                                     <label for="rdbM">Masculino</label>
                                 </td>
                                 <td>
                                     <input id="rdbF"
                                            type="radio" 
                                            name="sexo"
-                                           value="<%=tipodocumento.equals("F") ? "checked" : ""%>"/>
+                                           value="F"/>
                                     <label for="rdbF">Feminino</label> 
                                 </td>
                                 <td>
                                     <input id="rdbO"
                                            type="radio" 
                                            name="sexo"
-                                           value="<%=tipodocumento.equals("O") ? "checked" : ""%>"/>
+                                           value="O"/>
                                     <label for="rdbO">Outro</label>
                                 </td>
                             </tr>
