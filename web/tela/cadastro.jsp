@@ -4,44 +4,35 @@
     Author     : sala305b
 --%>
 
+<%@page import="java.sql.Date"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     Usuario user = (Usuario) request.getAttribute("idusuario");
-    String acao = "cadastrar", idcliente = "", nome = "", datanascimento = "",
-            documento = "", escolaridade = "", tipocumento = "", sexo = "", dddtelefone = "",
-            email = "", cep = "", logradouro = "", numero = "", bairro = "", cidade = "", uf = "",
-            complemento = "", datacadastro = "", ddd = "", telefone = "";
+    String acao = "cadastrar", idusuario = "", nome = "", responsavel = "", dtnascimento = "",
+            documento = "", ddd = "", email = "", dtcadastro = "", telefone = "", dddtelefone = "";
 
     Cliente clie = new Cliente();
     if (request.getParameter("acao") != null) {
         if (request.getParameter("acao").equals("editar")) {
-
-            idcliente = request.getParameter("idcliente");
-            boolean achou = clie.BuscarPorId(idcliente);
+            idusuario = request.getParameter("idusuario");
+            boolean achou = clie.BuscarPorId(idusuario);
             if (!achou) {
                 out.print("<script>"
                         + "window.alert('Cliente não Encontrado');"
                         + "</script>");
             } else {
                 acao = "editar";
-                idcliente = String.valueOf(clie.getId());
+                idusuario = String.valueOf(clie.getId());
                 nome = clie.getNome();
+                responsavel = String.valueOf(clie.getUser().getResponsavel());
+                dtnascimento = String.valueOf(clie.getDataNascimento());
                 documento = clie.getDocumento();
-                datanascimento = String.valueOf(clie.getDataNascimento());
-                ddd = clie.getDdd();
                 telefone = clie.getTelefone();
-                escolaridade = clie.getEscolaridade();
+                ddd = clie.getDdd();
                 email = clie.getEmail();
-                cep = clie.getCep();
-                logradouro = clie.getLogradouro();
-                numero = clie.getNumero();
-                complemento = clie.getComplemento();
-                bairro = clie.getBairro();
-                cidade = clie.getCidade();
-                uf = clie.getUf();
-                datacadastro = String.valueOf(clie.getDataCadastro());
+                dtcadastro = String.valueOf(clie.getDataCadastro());
             }
         }
     }
@@ -62,12 +53,13 @@
     </head>
     <body>
         <form action="ClienteServlet" method="POST">
-            <input type="hidden" name="idusuario" value="<%= user.getId() %>">
+            <input type="hidden" name="idusuario" value="<%=user.getId()%>">
+            <input type="hidden" name="acao" value="<%=acao%>" />
             <table border="0" cellspacing="0" cellpadding="5">
                 <tr>
                     <td>
                         <label for="">ID:</label><br/>
-                        <input size="5" value="<%=idcliente%>"
+                        <input size="5" value=""
                                type="text" name="idcliente" />
                     </td>
                     <td>
@@ -82,7 +74,7 @@
                     </td>
                     <td>
                         <label for="">Data de Nascimento:</label><br/>
-                        <input size="30"  value="<%=datanascimento%>"
+                        <input size="30"  value="<%=dtnascimento%>"
                                type="date" name="datanascimento" />
                     </td>
                 </tr>
@@ -129,13 +121,13 @@
                     <td>
                         <label for="sltEscolaridade">Escolaridade:</label>
                         <select id="sltEscolaridade" name="escolaridade">
-                            <option <%= escolaridade.equals("EM") ? "selected": "" %> 
+                            <option 
                                 value="EM">Ensino Médio</option>
-                            <option <%= escolaridade.equals("ET") ? "selected": "" %>
+                            <option 
                                 value="ET">Ensino Técnico</option>
-                            <option <%= escolaridade.equals("ES") ? "selected": "" %>
+                            <option 
                                 value="ES">Ensino Superior</option>
-                            <option <%= escolaridade.equals("PG") ? "selected": "" %>
+                            <option 
                                 value="PG">Pós Graduação</option>
                         </select>
                     </td>
@@ -188,7 +180,7 @@
                 <tr>
                     <td>
                         <label for="txtCEP">CEP:</label><br/>
-                        <input id="txtCEP" size="30" type="text" name="cep" value="<%=cep%>" />
+                        <input id="txtCEP" size="30" type="text" name="cep" value="" />
                     </td>
                     <td>
                     </td>
@@ -199,11 +191,11 @@
                             <tr>
                                 <td width="90%">
                                     <label for="">Logradouro:</label><br/>
-                                    <input size="55"type="text" name="logradouro" value="<%=logradouro%>" />
+                                    <input size="55"type="text" name="logradouro" value="" />
                                 </td>
                                 <td width="10%">
                                     <label for="">Numero:</label><br/>
-                                    <input size="5" type="text" name="numero" value="<%=numero%>" />
+                                    <input size="5" type="text" name="numero" value="" />
                                 </td>
                             </tr>
                         </table>
@@ -212,71 +204,71 @@
                 <tr>
                     <td>
                         <label for="">Bairro:</label><br/>
-                        <input size="30" type="text" name="bairro" value="<%=bairro%>" />
+                        <input size="30" type="text" name="bairro" value="" />
                     </td>
                     <td>
                         <label for="">Cidade:</label><br/>
-                        <input size="30" type="text" name="cidade" value="<%=cidade%>" />
+                        <input size="30" type="text" name="cidade" value="" />
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="">UF:</label><br/>
-                        <select id="sltEstado" name="uf" value="<%=uf%>">
+                        <select id="sltEstado" name="uf" value="uf">
                             <option value="">Selecione</option>
-                            <option <%= uf.equals("AC") ? "selected": "" %>
+                            <option 
                                 value="AC">Acre</option>
-                            <option <%= uf.equals("AL") ? "selected": "" %>
+                            <option 
                                 value="AL">Alagoas</option>
-                            <option <%= uf.equals("AP") ? "selected": "" %>
+                            <option 
                                 value="AP">Amapá</option>
-                            <option <%= uf.equals("AM") ? "selected": "" %>
+                            <option 
                                 value="AM">Amazonas</option>
-                            <option <%= uf.equals("BA") ? "selected": "" %>
+                            <option 
                                 value="BA">Bahia</option>
-                            <option <%= uf.equals("PG") ? "selected": "" %>
+                            <option 
                                 value="CE">Ceará</option>
-                            <option <%= uf.equals("DF") ? "selected": "" %>
+                            <option 
                                 value="DF">Distrito Federal</option>
-                            <option <%= uf.equals("ES") ? "selected": "" %>
+                            <option 
                                 value="ES">Espirito Santo</option>
-                            <option <%= uf.equals("GO") ? "selected": "" %>
+                            <option 
                                 value="GO">Goiás</option>
-                            <option <%= uf.equals("MA") ? "selected": "" %>
+                            <option 
                                 value="MA">Maranhão</option>
-                            <option <%= uf.equals("MS") ? "selected": "" %>
+                            <option 
                                 value="MS">Mato Grosso do Sul</option>
-                            <option <%= uf.equals("MT") ? "selected": "" %>
+                            <option 
                                 value="MT">Mato Grosso</option>
-                            <option <%= uf.equals("MG") ? "selected": "" %>
+                            <option 
                                 value="MG">Minas Gerais</option>
-                            <option <%= uf.equals("PA") ? "selected": "" %>
+                            <option 
                                 value="PA">Pará</option>
-                            <option <%= uf.equals("PB") ? "selected": "" %>
+                            <option 
                                 value="PB">Paraíba</option>
-                            <option <%= uf.equals("PR") ? "selected": "" %>
+                            <option 
                                 value="PR">Paraná</option>
-                            <option <%= uf.equals("PE") ? "selected": "" %>
+                            <option 
                                 value="PE">Pernambuco</option>
-                            <option <%= uf.equals("PT") ? "selected": "" %>
+                            <option 
                                 value="PI">Piauí</option>
-                            <option <%= uf.equals("RJ") ? "selected": "" %>
+                            <option 
                                 value="RJ">Rio de Janeiro</option>
-                            <option <%= uf.equals("RN") ? "selected": "" %>
+                            <option 
                                 value="RN">Rio Grande do Norte</option>
-                            <option <%= uf.equals("RS") ? "selected": "" %>
+                            <option 
                                 value="RS">Rio Grande do Sul</option>
-                            <option <%= uf.equals("RO") ? "selected": "" %>
+                            <option 
                                 value="RO">Rondônia</option>
-                            <option <%= uf.equals("RR") ? "selected": "" %>
+                            <option 
                                 value="RR">Roraima</option>
-                            <option <%= uf.equals("SC") ? "selected": "" %>
+                            <option 
                                 value="SC">Santa Catarina</option>
-                            <option <%= uf.equals("SP") ? "selected": "" %>
+                            <option 
                                 value="SP">São Paulo</option>
-                            <option <%= uf.equals("SE") ? "selected": "" %>
+                            <option 
                                 value="SE">Sergipe</option>
-                            <option <%= uf.equals("TO") ? "selected": "" %>
+                            <option 
                                 value="TO">Tocantins</option>
                         </select>
                     </td>

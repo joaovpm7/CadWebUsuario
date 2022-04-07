@@ -33,121 +33,103 @@ public class ClienteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        if (request.getParameter("idusuario").equals("editar")) {
-            String idcliente = request.getParameter("idcliente");
-            String nome = request.getParameter("nome");
-            String tipoDocumento = request.getParameter("tipodocumento");
-            String documento = request.getParameter("documento");
-            Date dataNascimento = Date.valueOf(request.getParameter("datanascimento"));
-            String email = request.getParameter("email");
-            String ddd = request.getParameter("ddd");
-            String telefone = request.getParameter("telefone");
-            String escolaridade = request.getParameter("escolaridade");
-            String cep = request.getParameter("cep");
-            String logradouro = request.getParameter("logradouro");
-            String numero = request.getParameter("numero");
-            String complemento = request.getParameter("complemento");
-            String bairro = request.getParameter("bairro");
-            String cidade = request.getParameter("cidade");
-            String uf = request.getParameter("uf");
-            Cliente cli = new Cliente();
-            cli.setId(Long.parseLong(idcliente));
-            cli.setNome(nome);
-            cli.setTipoDocumento(tipoDocumento);
-            cli.setDocumento(documento);
-            cli.setDataNascimento(dataNascimento);
-            cli.setEmail(email);
-            cli.setDdd(ddd);
-            cli.setTelefone(telefone);
-            cli.setEscolaridade(escolaridade);
-            cli.setCep(cep);
-            cli.setLogradouro(logradouro);
-            cli.setNumero(numero);
-            cli.setComplemento(complemento);
-            cli.setBairro(bairro);
-            cli.setCidade(cidade);
-            cli.setUf(uf);
-            boolean atualizou = cli.Atualizar();
-            if (atualizou) {
-                //Somente redireciona a página escolhida
-                response.sendRedirect("listar.jsp");
-            } else {
+        if (request.getParameter("acao") != null) {
+            if (request.getParameter("acao").equals("cadastrar")) {
+                String idusuario = request.getParameter("idusuario");
+                String nome = request.getParameter("nome");
+                String tipoDocumento = request.getParameter("tipodocumento");
+                String documento = request.getParameter("documento");
+                Date dataNascimento = Date.valueOf(request.getParameter("datanascimento"));
+                String email = request.getParameter("email");
+                String dddtelefone = request.getParameter("dddtelefone");
+                String escolaridade = request.getParameter("escolaridade");
+                String cep = request.getParameter("cep");
+                String sexo = request.getParameter("sexo");
+                String logradouro = request.getParameter("logradouro");
+                String numero = request.getParameter("numero");
+                String complemento = request.getParameter("complemento");
+                String bairro = request.getParameter("bairro");
+                String cidade = request.getParameter("cidade");
+                String uf = request.getParameter("uf");
+                Cliente cli = new Cliente();
+                cli.setNome(nome);
+                cli.setTipoDocumento(tipoDocumento);
+                cli.setDocumento(documento);
+                cli.setDataNascimento(dataNascimento);
+                cli.setEmail(email);
+                cli.setEscolaridade(escolaridade);
+                cli.setCep(cep);
+                cli.setSexo(sexo);
+                cli.setLogradouro(logradouro);
+                cli.setNumero(numero);
+                cli.setComplemento(complemento);
+                cli.setBairro(bairro);
+                cli.setCidade(cidade);
+                cli.setUf(uf);
+                Usuario us = new Usuario();
+                us.setId(Long.parseLong(idusuario));
+                cli.setUser(us);
+                String dddTelLimpo = dddtelefone.replace(" ", " ")
+                        .replace("-", "")
+                        .replace("(", "")
+                        .replace(")", "");
+                String ddd = dddTelLimpo.substring(0, 2);
+                String telefone = dddTelLimpo.length() == 10
+                        ? dddTelLimpo.substring(2, 6)
+                        + "-" + dddTelLimpo.substring(6)
+                        : dddTelLimpo.substring(2, 7)
+                        + "-" + dddTelLimpo.substring(7);
+                cli.setDdd(ddd);
+                cli.setTelefone(telefone);
+                boolean cadastrou = cli.Cadastrar();
+                //cadastrou == true
+                if (cadastrou) {
+                    request.setAttribute("idusuario",
+                            cli.getUser().getId());
+                    request.getRequestDispatcher("tela/listar.jsp")
+                            .forward(request, response);
+                } else {
+                    request.setAttribute("idusuario", cli.getUser());
+                    request.getRequestDispatcher("tela/cadastrar.jsp")
+                            .forward(request, response);
+                }
+            } else if (request.getParameter("acao").equals("editar")) {
+                //String idusuario = request.getParameter("idusuario");
+                String nome = request.getParameter("nome");
+                String documento = request.getParameter("documento");
+                Date dtNascimento = Date.valueOf(request.getParameter("dtnascimento"));
+                String email = request.getParameter("email");
+                String ddd = request.getParameter("ddd");
+                String telefone = request.getParameter("telefone");
+                Cliente cli = new Cliente();
+                //cli.setId(Long.parseLong(idusuario));
+                cli.setNome(nome);
+                cli.getUser().getResponsavel();
+                cli.setDataNascimento(dtNascimento);
+                cli.setDocumento(documento);
+                cli.setDdd(ddd);
+                cli.setTelefone(telefone);
+                cli.setEmail(email);
+                boolean atualizou = cli.Atualizar();
+                if (atualizou) {
+                    //Somente redireciona a página escolhida
+                    response.sendRedirect("tela/listar.jsp");
+                } else {
+                    String mensagem
+                            = "<h1>Edição não Efetuado com Sucesso</h1>";
+                    response.getWriter().print(mensagem);
+                }
+            } else if (request.getParameter("acao").equals("deletar")) {
+                int client = Integer.parseInt(request.getParameter("icliente"));
+                Cliente.Excluir(client);
                 String mensagem
-                        = "<h1>Edição não Efetuado com Sucesso</h1>";
+                        = "<h1>Produto Apagado com Sucesso</h1>";
                 response.getWriter().print(mensagem);
-            }
-        } else if (request.getParameter("idusuario").equals("apagar")) {
-            int client = Integer.parseInt(request.getParameter("idcliente"));
-            Cliente.Excluir(client);
-            String mensagem
-                    = "<h1>Produto Apagado com Sucesso</h1>";
-            response.getWriter().print(mensagem);
-        } else {
-            String nome = request.getParameter("nome");
-            String tipoDocumento = request.getParameter("tipodocumento");
-            String documento = request.getParameter("documento");
-            String sexo = request.getParameter("sexo");
-            Date dataNascimento = Date.valueOf(request.getParameter("datanascimento"));
-            String email = request.getParameter("email");
-            String escolaridade = request.getParameter("escolaridade");
-            String cep = request.getParameter("cep");
-            String logradouro = request.getParameter("logradouro");
-            String numero = request.getParameter("numero");
-            String complemento = request.getParameter("complemento");
-            String bairro = request.getParameter("bairro");
-            String cidade = request.getParameter("cidade");
-            String uf = request.getParameter("uf");
-            String dddtelefone = request.getParameter("dddtelefone");
-            String idusuario = request.getParameter("idusuario");
-            Cliente cli = new Cliente();
-            cli.setNome(nome);
-            cli.setTipoDocumento(tipoDocumento);
-            cli.setDocumento(documento);
-            cli.setSexo(sexo);
-            cli.setDataNascimento(dataNascimento);
-            cli.setEscolaridade(escolaridade);
-            cli.setEmail(email);
-            cli.setCep(cep);
-            cli.setLogradouro(logradouro);
-            cli.setNumero(numero);
-            cli.setComplemento(complemento);
-            cli.setBairro(bairro);
-            cli.setCidade(cidade);
-            cli.setUf(uf);
-            //registrando ID do usuario
-            Usuario us = new Usuario();
-            us.setId(Long.parseLong(idusuario));
-            cli.setUser(us);
-            String dddTelLimpo = dddtelefone.replace(" ", " ")//limpar a mascara
-                    .replace("-", "")
-                    .replace("(", "")
-                    .replace(")", "");
-            String ddd = dddTelLimpo.substring(0, 2);//27 99239446 de 0 até 2 então ele só pega os numeros 2 e 7
-            //que é o DDD. (O 9 não pegaria, para no 2)
-            //telefone fixo ou celular
-            String telefone = dddTelLimpo.length() == 10
-                    ? dddTelLimpo.substring(2, 6)
-                    + "-" + dddTelLimpo.substring(6)
-                    : dddTelLimpo.substring(2, 7)
-                    + "-" + dddTelLimpo.substring(7);
-            cli.setDdd(ddd);
-            cli.setTelefone(telefone);
-            boolean novoid = cli.Cadastrar();
-            if (novoid) {
-                //Somente redireciona a página escolhida
-                request.setAttribute("idusuario", cli.getUser().getId());
-                request.getRequestDispatcher("tele/listar.jsp")
-                        .forward(request, response);
-            } else {
-                request.setAttribute("idusuario", cli.getUser());
-                request.getRequestDispatcher("cadastrar.jsp")
-                        .forward(request, response);
             }
         }
     }
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
